@@ -1,0 +1,160 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data noupdate="1">
+        <record id="escala_principal" model="survey.scale">
+            <field name="id">1</field>
+            <field name="name">Escala Principal</field>
+        </record>
+        <record id="escala_secundaria" model="survey.scale">
+            <field name="id">2</field>
+            <field name="name">Escala Secundaria</field>
+        </record>
+        <record id="escala_validacion" model="survey.scale">
+            <field name="id">3</field>
+            <field name="name">Escala de validación</field>
+        </record>                
+        <!-- Subescalas Principales -->
+        <record id="sub-hs" model="survey.subscale">
+            <field name="id">1</field>
+            <field name="name">Hipocondría (Hs)</field>
+            <field name="scale_id" ref="escala_principal"/>
+        </record>          
+        <record id="sub-d" model="survey.subscale">
+            <field name="id">2</field>
+            <field name="name">Depresión (D)</field> 
+            <field name="scale_id" ref="escala_principal"/>
+        </record>        
+        <record id="sub-hy" model="survey.subscale">
+            <field name="id">3</field>
+            <field name="name">Histeria de conversión (Hy)</field>
+            <field name="scale_id" ref="escala_principal"/>
+        </record>        
+        <record id="sub-pd" model="survey.subscale">
+            <field name="id">4</field>
+            <field name="name">Psicopatía (Pd)</field>
+            <field name="scale_id" ref="escala_principal"/>
+        </record>        
+        <record id="sub-mf" model="survey.subscale">
+            <field name="id">5</field>
+            <field name="name">Masculinidad/Feminidad (Mf)</field>
+            <field name="scale_id" ref="escala_principal"/>
+        </record>        
+        <record id="sub-pa" model="survey.subscale">
+            <field name="id">6</field>
+            <field name="name">Paranoia (Pa)</field>
+            <field name="scale_id" ref="escala_principal"/>
+        </record>        
+        <record id="sub-pt" model="survey.subscale">
+            <field name="id">7</field>
+            <field name="name">Psicastenia (Pt)</field>
+            <field name="scale_id" ref="escala_principal"/>
+        </record>        
+        <record id="sub-sc" model="survey.subscale">
+            <field name="id">8</field>
+            <field name="name">Esquizofrenía (Sc)</field>
+            <field name="scale_id" ref="escala_principal"/>
+        </record>        
+        <record id="sub-ma" model="survey.subscale">
+            <field name="id">9</field>
+            <field name="name">Hipomanía (Ma)</field>
+            <field name="scale_id" ref="escala_principal"/>
+        </record>        
+        <record id="sub-si" model="survey.subscale">
+            <field name="id">10</field>
+            <field name="name">Introversión social (Si)</field>
+            <field name="scale_id" ref="escala_principal"/>
+        </record>            
+        <!-- Subescalas Secundarias  -->
+        <record id="sub-ans" model="survey.subscale">
+            <field name="id">11</field>
+            <field name="name">Ansiedad (ANS)</field>
+            <field name="scale_id" ref="escala_secundaria"/>
+        </record> 
+        <record id="sub-frs" model="survey.subscale">
+            <field name="id">12</field>
+            <field name="name">Miedos (FRS)</field>
+            <field name="scale_id" ref="escala_secundaria"/>
+        </record>        
+        <record id="sub-obs" model="survey.subscale">
+            <field name="id">13</field>
+            <field name="name">Obsesividad (OBS)</field>
+            <field name="scale_id" ref="escala_secundaria"/>
+        </record>        
+        <record id="sub-dep" model="survey.subscale">
+            <field name="id">14</field>
+            <field name="name">Depresión (DEP)</field>
+            <field name="scale_id" ref="escala_secundaria"/>
+        </record>        
+        <record id="sub-hea" model="survey.subscale">
+            <field name="id">15</field>
+            <field name="name">Preocupaciones por la salud(HEA)</field>
+            <field name="scale_id" ref="escala_secundaria"/>
+        </record>        
+        <record id="sub-biz" model="survey.subscale">
+            <field name="id">16</field>
+            <field name="name">Pensamiento extravagante (BIZ)</field>
+            <field name="scale_id" ref="escala_secundaria"/>
+        </record>        
+        <record id="sub-ang" model="survey.subscale">
+            <field name="id">17</field>
+            <field name="name">Hostilidad (ANG)</field>
+            <field name="scale_id" ref="escala_secundaria"/>
+        </record>        
+        <record id="sub-cyn" model="survey.subscale">
+            <field name="id">18</field>
+            <field name="name">Cinismo (CYN)</field>
+            <field name="scale_id" ref="escala_secundaria"/>
+        </record>        
+        <record id="sub-asp" model="survey.subscale">
+            <field name="id">19</field>
+            <field name="name">Conductas antisociales (ASP)</field>
+            <field name="scale_id" ref="escala_secundaria"/>
+        </record>        
+        <record id="sub-tpa" model="survey.subscale">
+            <field name="id">20</field>
+            <field name="name">Comportamiento Tipo A (TPA)</field>
+            <field name="scale_id" ref="escala_secundaria"/>
+        </record>        
+        <record id="sub-lse" model="survey.subscale">
+            <field name="id">21</field>
+            <field name="name">Baja Autoestima (LSD)</field>
+            <field name="scale_id" ref="escala_secundaria"/>
+        </record>        
+        <record id="sub-sod" model="survey.subscale">
+            <field name="id">22</field>
+            <field name="name">Malestar social (SOD)</field>
+            <field name="scale_id" ref="escala_secundaria"/>
+        </record>        
+        <record id="sub-fam" model="survey.subscale">
+            <field name="id">23</field>
+            <field name="name">Problemas familiares (FAM)</field>
+            <field name="scale_id" ref="escala_secundaria"/>
+        </record>        
+        <record id="sub-wrk" model="survey.subscale">
+            <field name="id">24</field>
+            <field name="name">Interferencia laboral (WRK)</field>
+            <field name="scale_id" ref="escala_secundaria"/>
+        </record>        
+        <record id="sub-trt" model="survey.subscale">
+            <field name="id">25</field>
+            <field name="name">Indicadores negativos de tratamiento (TRT)</field>
+            <field name="scale_id" ref="escala_secundaria"/>
+        </record>    
+        <!-- Subescalas de validación  -->
+        <record id="sub-l" model="survey.subscale">
+            <field name="id">26</field>
+            <field name="name">Mentira (L)</field>
+            <field name="scale_id" ref="escala_validacion"/>
+        </record>
+        <record id="sub-f" model="survey.subscale">
+            <field name="id">27</field>
+            <field name="name">Incoherencia (F)</field>
+            <field name="scale_id" ref="escala_validacion"/>
+        </record>      
+        <record id="sub-k" model="survey.subscale">
+            <field name="id">28</field>
+            <field name="name">Negación (K)</field>
+            <field name="scale_id" ref="escala_validacion"/>
+        </record>                                  
+    </data>
+</odoo>

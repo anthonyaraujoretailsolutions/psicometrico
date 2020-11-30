@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <record id="survey_survey_form-_inherit" model="ir.ui.view">
+            <field name="name">survey.survey.form.inherit</field>
+            <field name="model">survey.survey</field>
+            <field name="inherit_id" ref="survey.survey_form"/>
+            <field name="arch" type="xml">
+              <xpath expr="/form/sheet/notebook/page/field[@name='question_and_page_ids']/tree/field[@name='title']" position="after">
+                    <field name="scale" visible="1"/>
+                    <field name="subscale" visible="1"/>
+                    <field name="score" visible="1"/>
+                </xpath>            
+
+            </field>
+        </record>
+        <record id="survey_question_form_inherit" model="ir.ui.view">
+            <field name="name">survey.question.form.inherit</field>
+            <field name="model">survey.question</field>
+            <field name="inherit_id" ref="survey.survey_question_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='question_type']" position="after">
+                    <!-- <field name="scale" visible="1" attrs="{'invisible': [('question_type', 'not in', ['simple_choice', 'multiple_choice', 'matrix'])]}" widget="many2many_tags"/> -->
+                    <field name="subscale" visible="1" attrs="{'invisible': [('question_type', 'not in', ['simple_choice', 'multiple_choice', 'matrix'])]}" widget="many2many_tags"/>
+                    <field name="score" visible="1" attrs="{'invisible': [('question_type', 'not in', ['simple_choice', 'multiple_choice', 'matrix'])]}"/>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page/field[@name='labels_ids']/tree/field[@name='value']" position="after">
+                    <field name="correct_answer" visible="1"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="survey_answer_form_inherit" model="ir.ui.view">
+            <field name="name">survey.user_input.view.form.inherit</field>
+            <field name="model">survey.user_input</field>
+            <field name="inherit_id" ref="survey.survey_user_input_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/header" position="inside">
+                    <button name="corregir" string="Corregir" type="object"/>
+                </xpath>            
+                <xpath expr="//field[@name='test_entry']" position="after">
+                    <field name="score" visible="1"/>
+                    <field name="recommendation" visible="1"/>
+                </xpath>   
+                <xpath expr="/form/sheet/field[@name='user_input_line_ids']/tree/field[@name='answer_is_correct']" position="replace">
+                    <field name="answer_state" visible="1"/>
+                </xpath>   
+                <xpath expr="/form/sheet/field[@name='user_input_line_ids']/tree/field[@name='create_date']" position="after">
+                    <field name="value_suggested" visible="1"/>
+                </xpath>  
+
+            </field>
+        </record>      
+        <record id="survey_answer_tree_inherit" model="ir.ui.view">
+            <field name="name">survey.user_input.view.tree</field>
+            <field name="model">survey.user_input</field>
+            <field name="inherit_id" ref="survey.survey_user_input_view_tree"/>
+            <field name="arch" type="xml">        
+                <xpath expr="//field[@name='quizz_passed']" position="before">
+                    <field name="recommendation"/>
+                </xpath>   
+            </field>
+        </record>             
+    </data>
+</odoo>
