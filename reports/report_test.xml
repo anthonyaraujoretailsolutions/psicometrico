@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="report_test_template">
+		<style type="text/css">
+			body {
+			color: #000 !important;
+			}
+			.border-black td {
+			border-top: 1px solid black !important;
+			}
+			.table-condensed > thead > tr > th {
+			border-bottom: 1px solid black !important;
+			}
+			.zero_min_height {
+			min-height: 0px !important;
+			}
+			/* YOU CAN ADD YOUR CUSTOM CSS HERE */
+			.row{
+			display: flex !important;
+			flex-direction: row !important;
+			flex-wrap: wrap !important;
+			width: 100% !important;
+			}
+			.col{
+			display: flex;
+			flex-direction: column;
+			flex-basis: 100%;
+			flex: 1;
+			}
+		</style>
+		<t t-call="web.external_layout">
+			<t t-foreach="docs" t-as="doc">
+				<div class="header">
+				</div>
+				<div class="page">
+					<div style="display:flex; flex-direction:row; justify-content:center; text-align:center; ">
+						<h1>
+							Resultados del test Psicotécnico
+						</h1>
+					</div>
+					<div class="row">
+						<div class="col">
+							<div class="row">
+								<b>
+									<span>
+										Postulante:
+									</span>
+								</b>
+								<t t-esc="doc.partner_id.name" />
+							</div>
+							<div class="row">
+								<b>
+									<span>
+										Compañia:
+									</span>
+								</b>
+								<t t-esc="doc.partner_id.company_id.name" />
+							</div>
+						</div>
+						<div class="col">
+							<div class="row">
+								<b>
+									<span>
+										Correo Electrónico:
+									</span>
+								</b>
+								<t t-esc="doc.partner_id.email" />
+							</div>
+							<div class="row">
+								<b>
+									<span>
+										N° Documento:
+									</span>
+								</b>
+								<t t-esc="doc.partner_id.vat" />
+							</div>
+						</div>
+					</div>
+					<div>
+						<h2>
+							Recomendación
+						</h2>
+						<h2>
+							<t t-esc="doc.recommendation" />
+						</h2>
+					</div>
+					<!-- <t t-esc="doc.getValidaciones()" /> -->
+					<table class="table table-condensed" style="border: 3px solid red;
+                                                                border-collapse: collapse;">
+						<h3>
+							Escala de validación
+						</h3>
+						<thead>
+							<tr style="background:red">
+								<th class="text-left bg-danger">
+									<strong style="color:white">
+										Escala de validación
+									</strong >
+								</th>
+								<th class="text-left bg-danger">
+									<strong style="color:white">
+										Interpretación por escala
+									</strong>
+								</th>
+							</tr>
+						</thead>
+						<tbody style="color: red
+                            background: transparent">
+							<tr t-foreach="doc.getValidaciones()" t-as="item">
+								<t t-if="item['escala']=='Escala de validación'">
+									<td>
+										<span t-esc="item['subescala']" />
+									</td>
+									<td>
+										<span t-esc="item['recomendacion']" />
+									</td>
+								</t>
+							</tr>
+						</tbody>
+					</table>
+					<table class="table table-condensed" style="border: 3px solid green;
+                                                                border-collapse: collapse;">
+						<h3>
+							Escala de Principal
+						</h3>
+						<thead>
+							<tr style="background:green">
+								<th class="text-left bg-success">
+									<strong style="color:white">
+										Escalas principales
+									</strong>
+								</th>
+								<th class="text-left bg-success">
+									<strong style="color:white">
+										Interpretación por escala
+									</strong>
+								</th>
+							</tr>
+						</thead>
+						<tbody style="color: green
+                            background: transparent">
+							<tr t-foreach="doc.getValidaciones()" t-as="item">
+								<t t-if="item['escala']=='Escala Principal'">
+									<td>
+										<span t-esc="item['subescala']" />
+									</td>
+									<td>
+										<span t-esc="item['recomendacion']" />
+									</td>
+								</t>
+							</tr>
+						</tbody>
+					</table>
+					<table class="table table-condensed" style="border: 3px solid purple;
+                                                                border-collapse: collapse;">
+						<h3>
+							Escala de Secundaria
+						</h3>
+						<thead>
+							<tr style="background:purple">
+								<th class="text-left bg-info">
+									<strong style="color:white">
+										Escalas secundarias
+									</strong>
+								</th>
+								<th class="text-left bg-info">
+									<strong style="color:white">
+										Interpretación por escala
+									</strong>
+								</th>
+							</tr>
+						</thead>
+						<tbody style="color: purple
+                            background: transparent">
+							<tr t-foreach="doc.getValidaciones()" t-as="item">
+								<t t-if="item['escala']=='Escala Secundaria'">
+									<td>
+										<span t-esc="item['subescala']" />
+									</td>
+									<td>
+										<span t-esc="item['recomendacion']" />
+									</td>
+								</t>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</t>
+		</t>
+	</template>
+	<template id="report_test">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="doc">
+				<t t-call="psicometric_test.report_test_template" />
+			</t>
+		</t>
+	</template>
+</odoo>

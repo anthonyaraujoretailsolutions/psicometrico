@@ -1101,6 +1101,17 @@
             <field name="question_id" ref="pregunta_100"/>
             <field name="correct_answer">true</field>            
         </record>
+        <!-- Respuesta 101 -->
+        <record id="respuesta_true_101" model="survey.label">
+            <field name="value">VERDADERO</field>
+            <field name="question_id" ref="pregunta_101"/>
+            <field name="correct_answer">false</field>            
+        </record>
+        <record id="respuesta_false_101" model="survey.label">
+            <field name="value">FALSO</field>
+            <field name="question_id" ref="pregunta_101"/>
+            <field name="correct_answer">true</field>            
+        </record>        
         <!-- Respuesta 102 -->
         <record id="respuesta_true_102" model="survey.label">
             <field name="value">VERDADERO</field>
@@ -2291,7 +2302,7 @@
             <field name="correct_answer">true</field>            
         </record>
         <!-- Respuesta 210 -->
-        <record id="respuesta_true_200" model="survey.label">
+        <record id="respuesta_true_210" model="survey.label">
             <field name="value">VERDADERO</field>
             <field name="question_id" ref="pregunta_210"/>
             <field name="correct_answer">true</field>            
@@ -2302,7 +2313,7 @@
             <field name="correct_answer">false</field>            
         </record>
         <!-- Respuesta 211-->
-        <record id="respuesta_true_201" model="survey.label">
+        <record id="respuesta_true_211" model="survey.label">
             <field name="value">VERDADERO</field>
             <field name="question_id" ref="pregunta_211"/>
             <field name="correct_answer">false</field>            
@@ -2313,7 +2324,7 @@
             <field name="correct_answer">true</field>            
         </record>        
         <!-- Respuesta 212 -->
-        <record id="respuesta_true_202" model="survey.label">
+        <record id="respuesta_true_212" model="survey.label">
             <field name="value">VERDADERO</field>
             <field name="question_id" ref="pregunta_212"/>
             <field name="correct_answer">true</field>            
@@ -2324,7 +2335,7 @@
             <field name="correct_answer">false</field>            
         </record>
         <!-- Respuesta 213 -->
-        <record id="respuesta_true_203" model="survey.label">
+        <record id="respuesta_true_213" model="survey.label">
             <field name="value">VERDADERO</field>
             <field name="question_id" ref="pregunta_213"/>
             <field name="correct_answer">true</field>            
@@ -2335,7 +2346,7 @@
             <field name="correct_answer">false</field>            
         </record>
         <!-- Respuesta 214 -->
-        <record id="respuesta_true_204" model="survey.label">
+        <record id="respuesta_true_214" model="survey.label">
             <field name="value">VERDADERO</field>
             <field name="question_id" ref="pregunta_214"/>
             <field name="correct_answer">true</field>            
@@ -2346,7 +2357,7 @@
             <field name="correct_answer">false</field>            
         </record>
         <!-- Respuesta 215 -->
-        <record id="respuesta_true_205" model="survey.label">
+        <record id="respuesta_true_215" model="survey.label">
             <field name="value">VERDADERO</field>
             <field name="question_id" ref="pregunta_215"/>
             <field name="correct_answer">true</field>            
@@ -3324,6 +3335,17 @@
             <field name="question_id" ref="pregunta_301"/>
             <field name="correct_answer">false</field>            
         </record>
+        <!-- Respuesta 302 -->
+        <record id="respuesta_true_302" model="survey.label">
+            <field name="value">VERDADERO</field>
+            <field name="question_id" ref="pregunta_302"/>
+            <field name="correct_answer">true</field>            
+        </record>
+        <record id="respuesta_false_302" model="survey.label">
+            <field name="value">FALSO</field>
+            <field name="question_id" ref="pregunta_302"/>
+            <field name="correct_answer">false</field>            
+        </record>        
         <!-- Respuesta 303 -->
         <record id="respuesta_true_303" model="survey.label">
             <field name="value">VERDADERO</field>
@@ -3358,7 +3380,7 @@
             <field name="correct_answer">false</field>            
         </record>
         <!-- Respuesta 306 -->
-        <record id="respuesta_true_306" model="survey.label">
+        <!-- <record id="respuesta_true_306" model="survey.label">
             <field name="value">VERDADERO</field>
             <field name="question_id" ref="pregunta_306"/>
             <field name="correct_answer">true</field>            
@@ -3367,7 +3389,7 @@
             <field name="value">FALSO</field>
             <field name="question_id" ref="pregunta_306"/>
             <field name="correct_answer">false</field>            
-        </record>
+        </record> -->
         <!-- Respuesta 307 -->
         <record id="respuesta_true_307" model="survey.label">
             <field name="value">VERDADERO</field>
@@ -5613,14 +5635,14 @@
             <field name="correct_answer">false</field>            
         </record>
         <!-- Respuesta 511 -->
-        <record id="respuesta_true_515" model="survey.label">
+        <record id="respuesta_true_511" model="survey.label">
             <field name="value">VERDADERO</field>
-            <field name="question_id" ref="pregunta_515"/>
+            <field name="question_id" ref="pregunta_511"/>
             <field name="correct_answer">true</field>            
         </record>
-        <record id="respuesta_false_515" model="survey.label">
+        <record id="respuesta_false_511" model="survey.label">
             <field name="value">FALSO</field>
-            <field name="question_id" ref="pregunta_515"/>
+            <field name="question_id" ref="pregunta_511"/>
             <field name="correct_answer">false</field>            
         </record>
         <!-- Respuesta 512 -->

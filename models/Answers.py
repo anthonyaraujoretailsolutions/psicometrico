@@ -1,5 +1,6 @@
 from odoo import models, fields, api
 import logging
+import json
 _logger = logging.getLogger(__name__)
 
 class SurveyUser_inputInherit(models.Model):
@@ -60,7 +61,9 @@ class SurveyUser_inputInherit(models.Model):
                 for subscala in pregunta.question_id.subscale:
                     if subscala.name == subescala:
                         puntaje += pregunta.answer_score
+            escala = self.env['survey.subscale'].search([('name', '=', subescala)])
             obj = {
+                'escala': escala.scale_id.name,
                 'subescala': subescala,
                 'puntaje': puntaje
             }
@@ -72,63 +75,64 @@ class SurveyUser_inputInherit(models.Model):
         obj={}
         for subescala in puntajes_parciales:
             valor = 0
-            if subescala['subescala'] == 'Hipocondría':
+            if subescala['subescala'] == 'Hipocondría (Hs)':
                 valor = self.tablaHipocondria(subescala['puntaje'])
-            if subescala['subescala'] == 'Depresión':
+            if subescala['subescala'] == 'Depresión (D)':
                 valor = self.tablaDepresion(subescala['puntaje'])
-            if subescala['subescala'] == 'Histeria de conversión':
+            if subescala['subescala'] == 'Histeria de conversión (Hy)':
                 valor = self.tablaHisteria(subescala['puntaje'])
-            if subescala['subescala'] == 'Psicopatía':
+            if subescala['subescala'] == 'Psicopatía (Pd)':
                 valor = self.tablaPsicopatia(subescala['puntaje'])
-            if subescala['subescala'] == 'Masculinidad/Feminidad':
+            if subescala['subescala'] == 'Masculinidad/Feminidad (Mf)':
                 valor = self.tablaMasculinidadFeminidad(subescala['puntaje'])
-            if subescala['subescala'] == 'Paranoia':
+            if subescala['subescala'] == 'Paranoia (Pa)':
                 valor = self.tablaParanoia(subescala['puntaje'])
             if subescala['subescala'] == '	Psicastenia':
                 valor = self.tablaPsicastenia(subescala['puntaje'])
-            if subescala['subescala'] == 'Esquizofrenía':
+            if subescala['subescala'] == 'Esquizofrenía (Sc)':
                 valor = self.tablaEsquizofrenia(subescala['puntaje'])
-            if subescala['subescala'] == 'Hipomanía':
+            if subescala['subescala'] == 'Hipomanía (Ma)':
                 valor = self.tablaHipomania(subescala['puntaje'])
-            if subescala['subescala'] == 'Introversión social':
+            if subescala['subescala'] == 'Introversión social (Si)':
                 valor = self.tablaIntroversion(subescala['puntaje'])
-            if subescala['subescala'] == 'Ansiedad':
+            if subescala['subescala'] == 'Ansiedad (ANS)':
                 valor = self.tablaAnsiedad(subescala['puntaje'])
-            if subescala['subescala'] == 'Miedos':
+            if subescala['subescala'] == 'Miedos (FRS)':
                 valor = self.tablaMiedos(subescala['puntaje'])
-            if subescala['subescala'] == 'Obsesividad':
+            if subescala['subescala'] == 'Obsesividad (OBS)':
                 valor = self.tablaObsesividad(subescala['puntaje'])
-            if subescala['subescala'] == 'Depresión':
+            if subescala['subescala'] == 'Depresión (DEP)':
                 valor = self.tablaDepresion(subescala['puntaje'])
-            if subescala['subescala'] == 'Preocupaciones por la salud':
+            if subescala['subescala'] == 'Preocupaciones por la salud(HEA)':
                 valor = self.tablaPreocupaciones(subescala['puntaje'])   
-            if subescala['subescala'] == 'Pensamiento extravagante':
+            if subescala['subescala'] == 'Pensamiento extravagante (BIZ)':
                 valor = self.tablaExtravagante(subescala['puntaje']) 
-            if subescala['subescala'] == 'Hostilidad':
+            if subescala['subescala'] == 'Hostilidad (ANG)':
                 valor = self.tablaHostilidad(subescala['puntaje']) 
-            if subescala['subescala'] == 'Cinismo':
+            if subescala['subescala'] == 'Cinismo (CYN)':
                 valor = self.tablaCinismo(subescala['puntaje']) 
-            if subescala['subescala'] == 'Conductas antisociales':
+            if subescala['subescala'] == 'Conductas antisociales (ASP)':
                 valor = self.tablaAntisocial(subescala['puntaje']) 
-            if subescala['subescala'] == 'Comportamiento Tipo A':
+            if subescala['subescala'] == 'Comportamiento Tipo A (TPA)':
                 valor = self.tablaComportamientoA(subescala['puntaje']) 
-            if subescala['subescala'] == 'Baja Autoestima':
+            if subescala['subescala'] == 'Baja Autoestima (LSD)':
                 valor = self.tablaBajaAutoestima(subescala['puntaje']) 
-            if subescala['subescala'] == 'Malestar social':
+            if subescala['subescala'] == 'Malestar social (SOD)':
                 valor = self.tablaMalestarSocial(subescala['puntaje']) 
-            if subescala['subescala'] == 'Problemas familiares':
+            if subescala['subescala'] == 'Problemas familiares (FAM)':
                 valor = self.tablaProblemasFamiliares(subescala['puntaje']) 
-            if subescala['subescala'] == 'Interferencia labora':
+            if subescala['subescala'] == 'Interferencia laboral (WRK)':
                 valor = self.tablaInterferencia(subescala['puntaje']) 
-            if subescala['subescala'] == 'Indicadores negativos de tratamiento':
+            if subescala['subescala'] == 'Indicadores negativos de tratamiento (TRT)':
                 valor = self.tablaIndicadores(subescala['puntaje']) 
-            if subescala['subescala'] == 'Mentira':
+            if subescala['subescala'] == 'Mentira (L)':
                 valor = self.tablaMentira(subescala['puntaje']) 
-            if subescala['subescala'] == 'Incoherencia':
+            if subescala['subescala'] == 'Incoherencia (F)':
                 valor = self.tablaIncoherencia(subescala['puntaje'])      
-            if subescala['subescala'] == 'Negación':
+            if subescala['subescala'] == 'Negación (K)':
                 valor = self.tablaNegacion(subescala['puntaje'])   
             obj = {
+                'escala': subescala['escala'],
                 'subescala': subescala['subescala'],
                 'puntaje': subescala['puntaje'],
                 'valor': valor
@@ -141,7 +145,7 @@ class SurveyUser_inputInherit(models.Model):
         obj={}
         for valor in valores_parciales:
             recomendacion = ''
-            if valor['subescala'] == 'Hipocondría':
+            if valor['subescala'] == 'Hipocondría (Hs)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -150,7 +154,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Depresión':
+            if valor['subescala'] == 'Depresión (D)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -159,7 +163,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Histeria de conversión':
+            if valor['subescala'] == 'Histeria de conversión (Hy)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -168,7 +172,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Psicopatía':
+            if valor['subescala'] == 'Psicopatía (Pd)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -177,7 +181,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Masculinidad/Feminidad':
+            if valor['subescala'] == 'Masculinidad/Feminidad (Mf)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -186,7 +190,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Paranoia':
+            if valor['subescala'] == 'Paranoia (Pa)':
                 if valor['valor'] < 35:
                     recomendacion = 'No Recomendable'
                 elif valor['valor'] >= 35 and valor['valor'] < 45:
@@ -199,7 +203,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'No Recomendable'                             
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Psicastenia':
+            if valor['subescala'] == 'Psicastenia (Pt)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -208,7 +212,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Esquizofrenía':
+            if valor['subescala'] == 'Esquizofrenía (Sc)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -217,7 +221,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Hipomanía':
+            if valor['subescala'] == 'Hipomanía (Ma)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -228,7 +232,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'                    
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Introversión social':
+            if valor['subescala'] == 'Introversión social (Si)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -237,7 +241,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Ansiedad':
+            if valor['subescala'] == 'Ansiedad (ANS)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable con observaciones'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -248,7 +252,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Miedos':
+            if valor['subescala'] == 'Miedos (FRS)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable con  observaciones'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -259,7 +263,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Obsesividad':
+            if valor['subescala'] == 'Obsesividad (OBS)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable con observaciones'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -270,7 +274,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Depresión':
+            if valor['subescala'] == 'Depresión (D)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable con observaciones'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -281,7 +285,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Preocupaciones por la salud':
+            if valor['subescala'] == 'Preocupaciones por la salud(HEA)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable con observaciones'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -292,7 +296,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable' 
-            if valor['subescala'] == 'Pensamiento extravagante':
+            if valor['subescala'] == 'Pensamiento extravagante (BIZ)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -301,7 +305,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Hostilidad':
+            if valor['subescala'] == 'Hostilidad (ANG)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable con observaciones'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -312,7 +316,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Cinismo':
+            if valor['subescala'] == 'Cinismo (CYN)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -323,7 +327,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Conductas antisociales':
+            if valor['subescala'] == 'Conductas antisociales (ASP)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -334,7 +338,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Comportamiento Tipo A':
+            if valor['subescala'] == 'Comportamiento Tipo A (TPA)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -345,7 +349,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Baja Autoestima':
+            if valor['subescala'] == 'Baja Autoestima (LSD)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -356,7 +360,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Malestar social':
+            if valor['subescala'] == 'Malestar social (SOD)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -365,7 +369,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Problemas familiares':
+            if valor['subescala'] == 'Problemas familiares (FAM)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -376,7 +380,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Interferencia labora':
+            if valor['subescala'] == 'Interferencia laboral (WRK)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -387,7 +391,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Indicadores negativos de tratamiento':
+            if valor['subescala'] == 'Indicadores negativos de tratamiento (TRT)':
                 if valor['valor'] < 40:
                     recomendacion = 'Recomendable'
                 elif valor['valor'] >= 40 and valor['valor'] < 60:
@@ -398,7 +402,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Recomendable con observaciones'
                 else:
                     recomendacion = 'No recomendable'
-            if valor['subescala'] == 'Mentira':
+            if valor['subescala'] == 'Mentira (L)':
                 if valor['valor'] < 50:
                     recomendacion = 'Probablemente válido'
                 elif valor['valor'] >= 50 and valor['valor'] < 59:
@@ -409,7 +413,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Probablemente válido'                    
                 else:
                     recomendacion = 'Probablemente inválido' 
-            if valor['subescala'] == 'Incoherencia':
+            if valor['subescala'] == 'Incoherencia (F)':
                 if valor['valor'] < 50:
                     recomendacion = 'Probablemente válido'
                 elif valor['valor'] >= 50 and valor['valor'] < 59:
@@ -422,7 +426,7 @@ class SurveyUser_inputInherit(models.Model):
                     recomendacion = 'Perfil inválido'                                          
                 else:
                     recomendacion = 'Perfil inválido'     
-            if valor['subescala'] == 'Negación':
+            if valor['subescala'] == 'Negación (K)':
                 if valor['valor'] < 50:
                     recomendacion = 'Perfil inválido'
                 elif valor['valor'] >= 50 and valor['valor'] < 60:
@@ -432,8 +436,9 @@ class SurveyUser_inputInherit(models.Model):
                 else:
                     recomendacion = 'Perfil válido'                      
             obj={
+                'escala':valor['escala'],
                 'subescala':valor['subescala'],
-                'recomendacion': valor
+                'recomendacion': recomendacion
             }
             valores_procesados.append(obj)
         return valores_procesados
@@ -452,7 +457,7 @@ class SurveyUser_inputInherit(models.Model):
         cerosValidacion = 0
         for valor in valores:
             # Principales    
-            if valor['subescala']== 'Hipocondría':
+            if valor['subescala']== 'Hipocondría (Hs)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaPrincipales +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -461,7 +466,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaPrincipales +=0
                     cerosPrincipal += 1
                 contadorPrincipales +=1               
-            if valor['subescala']== 'Depresión':
+            if valor['subescala']== 'Depresión (D)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaPrincipales +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -470,7 +475,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaPrincipales +=0
                     cerosPrincipal += 1
                 contadorPrincipales +=1    
-            if valor['subescala']== 'Histeria de conversión':
+            if valor['subescala']== 'Histeria de conversión (Hy)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaPrincipales +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -479,7 +484,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaPrincipales +=0
                     cerosPrincipal += 1
                 contadorPrincipales +=1    
-            if valor['subescala']== 'Psicopatía':
+            if valor['subescala']== 'Psicopatía (Pd)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaPrincipales +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -488,7 +493,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaPrincipales +=0
                     cerosPrincipal += 1
                 contadorPrincipales +=1    
-            if valor['subescala']== 'Masculinidad/Feminidad':
+            if valor['subescala']== 'Masculinidad/Feminidad (Mf)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaPrincipales +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -497,7 +502,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaPrincipales +=0
                     cerosPrincipal += 1
                 contadorPrincipales +=1    
-            if valor['subescala']== 'Paranoia':
+            if valor['subescala']== 'Paranoia (Pa)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaPrincipales +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -506,7 +511,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaPrincipales +=0
                     cerosPrincipal += 1
                 contadorPrincipales +=1    
-            if valor['subescala']== 'Psicastenia':
+            if valor['subescala']== 'Psicastenia (Pt)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaPrincipales +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -515,7 +520,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaPrincipales +=0
                     cerosPrincipal += 1
                 contadorPrincipales +=1    
-            if valor['subescala']== 'Esquizofrenía':
+            if valor['subescala']== 'Esquizofrenía (Sc)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaPrincipales +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -524,7 +529,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaPrincipales +=0
                     cerosPrincipal += 1
                 contadorPrincipales +=1    
-            if valor['subescala']== 'Hipomanía':
+            if valor['subescala']== 'Hipomanía (Ma)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaPrincipales +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -533,7 +538,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaPrincipales +=0
                     cerosPrincipal += 1
                 contadorPrincipales +=1    
-            if valor['subescala']== 'Introversión social':
+            if valor['subescala']== 'Introversión social (Si)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaPrincipales +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -543,7 +548,7 @@ class SurveyUser_inputInherit(models.Model):
                     cerosPrincipal += 1
                 contadorPrincipales +=1    
             #Secundarias    
-            if valor['subescala']== 'Ansiedad':
+            if valor['subescala']== 'Ansiedad (ANS)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaSecundarias +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -552,7 +557,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaSecundarias +=0
                     cerosSecundarias += 1
                 contadorSecundarias +=1    
-            if valor['subescala']== 'Miedos':
+            if valor['subescala']== 'Miedos (FRS)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaSecundarias +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -561,7 +566,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaSecundarias +=0
                     cerosSecundarias += 1
                 contadorSecundarias +=1    
-            if valor['subescala']== 'Obsesividad':
+            if valor['subescala']== 'Obsesividad (OBS)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaSecundarias +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -570,7 +575,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaSecundarias +=0
                     cerosSecundarias += 1
                 contadorSecundarias +=1    
-            if valor['subescala']== 'Depresión':
+            if valor['subescala']== 'Depresión (D)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaSecundarias += 2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -579,7 +584,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaSecundarias += 0
                     cerosSecundarias += 1
                 contadorSecundarias += 1    
-            if valor['subescala']== 'Preocupaciones por la salud':
+            if valor['subescala']== 'Preocupaciones por la salud(HEA)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaSecundarias +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -588,7 +593,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaSecundarias +=0
                     cerosSecundarias += 1
                 contadorSecundarias +=1    
-            if valor['subescala']== 'Pensamiento extravagante':
+            if valor['subescala']== 'Pensamiento extravagante (BIZ)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaSecundarias +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -597,7 +602,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaSecundarias +=0
                     cerosSecundarias += 1
                 contadorSecundarias +=1                       
-            if valor['subescala']== 'Hostilidad':
+            if valor['subescala']== 'Hostilidad (ANG)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaSecundarias +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -606,7 +611,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaSecundarias +=0
                     cerosSecundarias += 1
                 contadorSecundarias +=1
-            if valor['subescala']== 'Cinismo':
+            if valor['subescala']== 'Cinismo (CYN)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaSecundarias +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -615,7 +620,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaSecundarias +=0
                     cerosSecundarias += 1
                 contadorSecundarias +=1      
-            if valor['subescala']== 'Conductas antisociales':
+            if valor['subescala']== 'Conductas antisociales (ASP)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaSecundarias +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -624,7 +629,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaSecundarias +=0
                     cerosSecundarias += 1
                 contadorSecundarias +=1   
-            if valor['subescala']== 'Comportamiento Tipo A':
+            if valor['subescala']== 'Comportamiento Tipo A (TPA)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaSecundarias +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -633,7 +638,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaSecundarias +=0
                     cerosSecundarias += 1
                 contadorSecundarias +=1
-            if valor['subescala']== 'Baja Autoestima':
+            if valor['subescala']== 'Baja Autoestima (LSD)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaSecundarias +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -642,7 +647,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaSecundarias +=0
                     cerosSecundarias += 1
                 contadorSecundarias +=1
-            if valor['subescala']== 'Malestar social':
+            if valor['subescala']== 'Malestar social (SOD)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaSecundarias +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -651,7 +656,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaSecundarias +=0
                     cerosSecundarias += 1
                 contadorSecundarias +=1
-            if valor['subescala']== 'Problemas familiares':
+            if valor['subescala']== 'Problemas familiares (FAM)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaSecundarias +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -660,7 +665,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaSecundarias +=0
                     cerosSecundarias += 1
                 contadorSecundarias +=1
-            if valor['subescala']== 'Interferencia labora':
+            if valor['subescala']== 'Interferencia laboral (WRK)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaSecundarias +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -669,7 +674,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaSecundarias +=0
                     cerosSecundarias += 1
                 contadorSecundarias +=1
-            if valor['subescala']== 'Indicadores negativos de tratamiento':
+            if valor['subescala']== 'Indicadores negativos de tratamiento (TRT)':
                 if valor['recomendacion'] == 'Recomendable':
                     sumaSecundarias +=2
                 elif valor['recomendacion'] == 'Recomendable con observaciones':
@@ -679,7 +684,7 @@ class SurveyUser_inputInherit(models.Model):
                     cerosSecundarias += 1
                 contadorSecundarias +=1
             #Validacion
-            if valor['subescala']== 'Mentira':
+            if valor['subescala']== 'Mentira (L)':
                 if valor['recomendacion'] == 'Válido':
                     sumaValidacion +=4
                 elif valor['recomendacion'] == 'Probablemente válido':
@@ -692,7 +697,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaValidacion +=0 
                     cerosValidacion += 1
                 contadorValidacion +=1
-            if valor['subescala']== 'Incoherencia':
+            if valor['subescala']== 'Incoherencia (F)':
                 if valor['recomendacion'] == 'Válido':
                     sumaValidacion +=4
                 elif valor['recomendacion'] == 'Probablemente válido':
@@ -705,7 +710,7 @@ class SurveyUser_inputInherit(models.Model):
                     sumaValidacion +=0   
                     cerosValidacion += 1
                 contadorValidacion +=1
-            if valor['subescala']== 'Negación':
+            if valor['subescala']== 'Negación (K)':
                 if valor['recomendacion'] == 'Válido':
                     sumaValidacion +=4
                 elif valor['recomendacion'] == 'Probablemente válido':
@@ -754,9 +759,9 @@ class SurveyUser_inputInherit(models.Model):
                     validacion = 0
                 elif valor['valor'] == 1:
                     validacion = 0
-                elif valor.valor == 2:
+                elif valor['valor'] == 2:
                     validacion = 1
-                elif valor.valor == 3:
+                elif valor['valor'] == 3:
                     validacion = 1
                 else:
                     validacion = 2
@@ -873,6 +878,8 @@ class SurveyUser_inputInherit(models.Model):
             return 117
         if puntaje == 46:
             return 119
+        else: 
+            return 0
 
     def tablaDepresion(self, puntaje):
         if puntaje == 1:
@@ -987,6 +994,8 @@ class SurveyUser_inputInherit(models.Model):
             return 117               
         if puntaje == 56:
             return 119
+        else: 
+            return 0            
 
     def tablaHisteria(self, puntaje):
         if puntaje == 1:
@@ -1099,6 +1108,8 @@ class SurveyUser_inputInherit(models.Model):
             return 115
         if puntaje == 56:
             return 119
+        else: 
+            return 0            
 
     def tablaPsicopatia(self, puntaje):
         if puntaje == 4:
@@ -1209,6 +1220,8 @@ class SurveyUser_inputInherit(models.Model):
             return 118
         if puntaje == 57:
             return 120
+        else: 
+            return 0
 
     def tablaMasculinidadFeminidad(self, puntaje):
         if puntaje == 7:
@@ -1309,6 +1322,8 @@ class SurveyUser_inputInherit(models.Model):
             return 116
         if puntaje == 57:
             return 118
+        else: 
+            return 0
  
     def tablaParanoia(self, puntaje):
         if puntaje == 1:
@@ -1381,6 +1396,8 @@ class SurveyUser_inputInherit(models.Model):
             return 115
         if puntaje == 35:
             return 118
+        else: 
+            return 0
 
     def tablaPsicastenia(self, puntaje):
         if puntaje == 4:
@@ -1519,6 +1536,8 @@ class SurveyUser_inputInherit(models.Model):
             return 118
         if puntaje == 71:
             return 120                                                                                                    
+        else: 
+            return 0
 
     def tablaEsquizofrenia(self, puntaje):
         if puntaje == 1:
@@ -1689,6 +1708,8 @@ class SurveyUser_inputInherit(models.Model):
             return 118
         if puntaje == 84:
             return 119
+        else: 
+            return 0
 
     def tablaHipomania(self, puntaje):
         if puntaje == 2:
@@ -1785,7 +1806,9 @@ class SurveyUser_inputInherit(models.Model):
             return 112
         if puntaje == 48:
             return 114
-    
+        else: 
+            return 0
+
     def tablaIntroversion(self, puntaje):
         if puntaje == 1:
             return 19
@@ -1924,101 +1947,103 @@ class SurveyUser_inputInherit(models.Model):
         if puntaje == 68:
             return 97
         if puntaje == 69:
-            return 98                                                                                                                                                                                                  
-        if puntaje == 0:
-            return 17
-        if puntaje == 1:
-            return 20
-        if puntaje == 2:
-            return 22
-        if puntaje == 3:
-            return 24
-        if puntaje == 4:
-            return 26
-        if puntaje == 5:
-            return 28
-        if puntaje == 6:
-            return 31
-        if puntaje == 7:
-            return 33
-        if puntaje == 8:
-            return 35
-        if puntaje == 9:
-            return 37
-        if puntaje == 10:
-            return 40
-        if puntaje == 11:
-            return 42
-        if puntaje == 12:
-            return 44
-        if puntaje == 13:
-            return 46
-        if puntaje == 14:
-            return 48
-        if puntaje == 15:
-            return 51
-        if puntaje == 16:
-            return 53
-        if puntaje == 17:
-            return 55
-        if puntaje == 18:
-            return 57
-        if puntaje == 19:
-            return 60
-        if puntaje == 20:
-            return 62
-        if puntaje == 21:
-            return 64
-        if puntaje == 22:
-            return 66
-        if puntaje == 23:
-            return 68
-        if puntaje == 24:
-            return 71
-        if puntaje == 25:
-            return 73
-        if puntaje == 26:
-            return 75
-        if puntaje == 27:
-            return 77
-        if puntaje == 28:
-            return 80
-        if puntaje == 29:
-            return 82                                                                                                                                                                                                                                                                                                                                                
-        if puntaje == 30:
-            return 84
-        if puntaje == 31:
-            return 86
-        if puntaje == 32:
-            return 88
-        if puntaje == 33:
-            return 91
-        if puntaje == 34:
-            return 93
-        if puntaje == 35:
-            return 95
-        if puntaje == 36:
-            return 97
-        if puntaje == 37:
-            return 99
-        if puntaje == 38:
-            return 102
-        if puntaje == 39:
-            return 104
-        if puntaje == 40:
-            return 106
-        if puntaje == 41:
-            return 108
-        if puntaje == 42:
-            return 110
-        if puntaje == 43:
-            return 113
-        if puntaje == 44:
-            return 115
-        if puntaje == 45:
-            return 117
-        if puntaje == 46:
-            return 119
+            return 98       
+
+
+        # if puntaje == 0:
+        #     return 17
+        # if puntaje == 1:
+        #     return 20
+        # if puntaje == 2:
+        #     return 22
+        # if puntaje == 3:
+        #     return 24
+        # if puntaje == 4:
+        #     return 26
+        # if puntaje == 5:
+        #     return 28
+        # if puntaje == 6:
+        #     return 31
+        # if puntaje == 7:
+        #     return 33
+        # if puntaje == 8:
+        #     return 35
+        # if puntaje == 9:
+        #     return 37
+        # if puntaje == 10:
+        #     return 40
+        # if puntaje == 11:
+        #     return 42
+        # if puntaje == 12:
+        #     return 44
+        # if puntaje == 13:
+        #     return 46
+        # if puntaje == 14:
+        #     return 48
+        # if puntaje == 15:
+        #     return 51
+        # if puntaje == 16:
+        #     return 53
+        # if puntaje == 17:
+        #     return 55
+        # if puntaje == 18:
+        #     return 57
+        # if puntaje == 19:
+        #     return 60
+        # if puntaje == 20:
+        #     return 62
+        # if puntaje == 21:
+        #     return 64
+        # if puntaje == 22:
+        #     return 66
+        # if puntaje == 23:
+        #     return 68
+        # if puntaje == 24:
+        #     return 71
+        # if puntaje == 25:
+        #     return 73
+        # if puntaje == 26:
+        #     return 75
+        # if puntaje == 27:
+        #     return 77
+        # if puntaje == 28:
+        #     return 80
+        # if puntaje == 29:
+        #     return 82                                                                                                                                                                                                                                                                                                                                                
+        # if puntaje == 30:
+        #     return 84
+        # if puntaje == 31:
+        #     return 86
+        # if puntaje == 32:
+        #     return 88
+        # if puntaje == 33:
+        #     return 91
+        # if puntaje == 34:
+        #     return 93
+        # if puntaje == 35:
+        #     return 95
+        # if puntaje == 36:
+        #     return 97
+        # if puntaje == 37:
+        #     return 99
+        # if puntaje == 38:
+        #     return 102
+        # if puntaje == 39:
+        #     return 104
+        # if puntaje == 40:
+        #     return 106
+        # if puntaje == 41:
+        #     return 108
+        # if puntaje == 42:
+        #     return 110
+        # if puntaje == 43:
+        #     return 113
+        # if puntaje == 44:
+        #     return 115
+        # if puntaje == 45:
+        #     return 117
+        # if puntaje == 46:
+        #     return 119
 
     def tablaAnsiedad(self, puntaje):
         if puntaje == 0:
@@ -2075,7 +2100,8 @@ class SurveyUser_inputInherit(models.Model):
             return 86
         if puntaje == 26:
             return 88
-
+        else: 
+            return 0
     def tablaMiedos(self, puntaje):
         if puntaje == 0:
             return 32
@@ -2125,7 +2151,8 @@ class SurveyUser_inputInherit(models.Model):
             return 80
         if puntaje == 23:
             return 82
-
+        else: 
+            return 0
     def tablaObsesividad(self, puntaje):
         if puntaje == 0:
             return 33
@@ -2173,7 +2200,8 @@ class SurveyUser_inputInherit(models.Model):
             return 93
         if puntaje == 22:
             return 96
-    
+        else: 
+            return 0    
     def tablaDepresion(self, puntaje):
         if puntaje == 0:
             return 35
@@ -2243,7 +2271,8 @@ class SurveyUser_inputInherit(models.Model):
             return 95
         if puntaje == 33:
             return 97                                                                                                            
- 
+        else: 
+            return 0
     def tablaPreocupaciones(self, puntaje):
         if puntaje == 0:
             return 35
@@ -2319,7 +2348,8 @@ class SurveyUser_inputInherit(models.Model):
             return 104
         if puntaje == 36:
             return 106
-
+        else: 
+            return 0
     def tablaExtravagante(self, puntaje):
         if puntaje == 0:
             return 39
@@ -2369,7 +2399,8 @@ class SurveyUser_inputInherit(models.Model):
             return 104
         if puntaje == 23:
             return 107
-
+        else: 
+            return 0
     def tablaHostilidad(self, puntaje):
         if puntaje == 0:
             return 39
@@ -2419,7 +2450,8 @@ class SurveyUser_inputInherit(models.Model):
             return 104
         if puntaje == 23:
             return 107
-
+        else: 
+            return 0
     def tablaCinismo(self, puntaje):
         if puntaje == 0:
             return 29
@@ -2483,7 +2515,8 @@ class SurveyUser_inputInherit(models.Model):
             return 85
         if puntaje == 30:
             return 86
-
+        else: 
+            return 0
     def tablaAntisocial(self, puntaje):
         if puntaje == 0:
             return 26
@@ -2539,7 +2572,8 @@ class SurveyUser_inputInherit(models.Model):
             return 87
         if puntaje == 26:
             return 89
-
+        else: 
+            return 0
     def tablaComportamientoA(self, puntaje):
         if puntaje == 0:
             return 26
@@ -2587,7 +2621,8 @@ class SurveyUser_inputInherit(models.Model):
             return 85
         if puntaje == 22:
             return 88
-
+        else: 
+            return 0
     def tablaBajaAutoestima(self, puntaje):
         if puntaje == 0:
             return 33
@@ -2639,7 +2674,8 @@ class SurveyUser_inputInherit(models.Model):
             return 90
         if puntaje == 24:
             return 92
-
+        else: 
+            return 0
     def tablaMalestarSocial(self,puntaje):
         if puntaje == 0:
             return 33
@@ -2691,7 +2727,8 @@ class SurveyUser_inputInherit(models.Model):
             return 90
         if puntaje == 24:
             return 92
-
+        else: 
+            return 0
     def tablaProblemasFamiliares(self, puntaje):
         if puntaje == 0:
             return 35
@@ -2765,7 +2802,8 @@ class SurveyUser_inputInherit(models.Model):
             return 117
         if puntaje == 36:
             return 119
-                                                                                                       
+        else: 
+            return 0                                                                                                       
     def tablaInterferencia(self, puntaje):
         if puntaje == 0:
             return 34
@@ -2833,7 +2871,8 @@ class SurveyUser_inputInherit(models.Model):
             return 87
         if puntaje == 33:
             return 89
-
+        else: 
+            return 0
     def tablaIndicadores(self, puntaje):
         if puntaje == 0:
             return 34
@@ -2919,7 +2958,8 @@ class SurveyUser_inputInherit(models.Model):
             return 118
         if puntaje == 41:
             return 120                                                                       
-
+        else: 
+            return 0
     def tablaMentira(self, puntaje):
         if puntaje == 0:
             return 30
@@ -2963,7 +3003,8 @@ class SurveyUser_inputInherit(models.Model):
             return 108
         if puntaje == 20:
             return 112
-
+        else: 
+            return 0
     def tablaIncoherencia(self, puntaje):
         if puntaje == 0:
             return 36
@@ -3061,7 +3102,8 @@ class SurveyUser_inputInherit(models.Model):
             return 119
         if puntaje == 47:
             return 120   
-
+        else: 
+            return 0
     def tablaNegacion(self, puntaje):
         if puntaje == 0:
             return 18
@@ -3159,8 +3201,25 @@ class SurveyUser_inputInherit(models.Model):
             return 117
         if puntaje == 47:
             return 119   
+        else: 
+            return 0
+# Funciones para los reportes
+    def getValidaciones(self):
+        #Obtengo las SubEscalas presentes en el examen
+        subescalas = self.ObtenerSubEscalas()
 
-    
+        #Obtengo los puntajes por cada Subescala
+        puntajes_parciales = self.sumarPuntajesPorSubescala(subescalas)
+
+        #Obtener valor de escala a partir del puntaje
+        valores_parciales = self.leerTablas(puntajes_parciales)
+
+        #Obtener la interpretación por los valores
+        interpretaciones = self.leerInterpretación(valores_parciales)
+
+        return interpretaciones
+
+
 class SurveyUser_inputLineInherit(models.Model):
     _inherit="survey.user_input_line"
     answer_state = fields.Char(string='Estado')

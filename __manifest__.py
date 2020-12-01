@@ -11,7 +11,7 @@
     'qweb': [],
 
     'category': 'Uncategorized',
-    'version': '0.1.0.0',
+    'version': '0.1.0.4',
     'depends': ['survey'],
     # always loaded
     'data': [
@@ -20,6 +20,8 @@
         'data/answers.xml',        
         'security/ir.model.access.csv',
         'views/menu_items.xml',
-        'views/survey_views.xml'
+        'views/survey_views.xml',
+        'reports/report.xml',
+        'reports/report_test.xml',
         ]
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+        id="report_psicometric_test"
+        model="survey.user_input"
+        string="Resultados del examen"
+        report_type="qweb-pdf"
+        name="psicometric_test.report_test"
+        file="psicometric_test.report_test"
+    />
+</odoo>
+
+

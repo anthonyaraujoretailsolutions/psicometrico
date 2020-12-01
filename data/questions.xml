@@ -2110,7 +2110,7 @@
         </record>
 
         <record id="pregunta_200" model="survey.question">
-            <field name="title">No me cuesta pedir ayuda a mis amigos, incluso aunque no pueda devolverles el favor.   </field>
+            <field name="title">No me cuesta pedir ayuda a mis amigos, incluso aunque no pueda devolverles el favor.</field>
             <field name="question_type">simple_choice</field>
             <field name="survey_id" ref="Encuesta"/>
             <field name="is_page">false</field>
@@ -3285,7 +3285,7 @@
             <field name="score">1</field>
         </record>
 
-        <record id="pregunta_306" model="survey.question">
+        <!-- <record id="pregunta_306" model="survey.question">
             <field name="title">Nadie parece comprenderme.   </field>
             <field name="question_type">simple_choice</field>
             <field name="survey_id" ref="Encuesta"/>
@@ -3294,7 +3294,7 @@
             <field name="subscale"  eval="[(6, 0, [ ref('sub-dep'),ref('sub-trt'),ref('sub-f')])]"/>
             <field name="question_type">simple_choice</field>
             <field name="score">1</field>
-        </record>
+        </record> -->
 
         <record id="pregunta_307" model="survey.question">
             <field name="title">A veces oigo tan bien que me molesta.  </field>
